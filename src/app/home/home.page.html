@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      ¡Bienvenido!
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="carousel">
+    <ion-slides>
+      <ion-slide>
+        <img
+          src="https://speisekarte.menu/storage/media/company_images/1433746/good-food-display-nci-visuals-online-1543631835.jpg"
+          alt="" srcset="">
+      </ion-slide>
+      <ion-slide>
+        <img
+          src="https://speisekarte.menu/storage/media/company_images/1433746/good-food-display-nci-visuals-online-1543631835.jpg"
+          alt="" srcset="">
+      </ion-slide>
+      <ion-slide>
+        <img
+          src="https://speisekarte.menu/storage/media/company_images/1433746/good-food-display-nci-visuals-online-1543631835.jpg"
+          alt="" srcset="">
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <div class="container">
+    <ion-searchbar showCancelButton="focus"></ion-searchbar>
+    <div class="products">
+      <app-explore-container [stores]="this.availableStores"></app-explore-container>
+    </div>
+  </div>
+</ion-content>

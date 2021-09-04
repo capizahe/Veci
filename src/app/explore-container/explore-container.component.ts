@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Store } from '../model/store';
 
 @Component({
   selector: 'app-explore-container',
@@ -6,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./explore-container.component.scss'],
 })
 export class ExploreContainerComponent implements OnInit {
-  @Input() name: string;
+  @Input() stores: Array<Store>;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }
