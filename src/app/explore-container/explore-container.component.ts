@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { Store } from '../model/store';
 
 @Component({
@@ -9,8 +10,13 @@ import { Store } from '../model/store';
 export class ExploreContainerComponent implements OnInit {
   @Input() stores: Array<Store>;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
+
+  openStore(store: Store) {
+    console.log('opening store ', store);
+    this.router.navigateByUrl(`/store/${store.id}`);
+  }
 
 }

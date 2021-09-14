@@ -1,7 +1,7 @@
 <div id="container">
-  <ion-card *ngFor="let store of stores" class="product-card">
+  <ion-card *ngFor="let store of stores" class="product-card" (click)="openStore(store)">
     <ion-card-header>
-      <img [src]="this.store.imageUrl" class="card-image" alt="">
+      <img [src]="this.store.imageLogo" class="card-image" alt="">
       <span>{{this.store.name}}</span>
     </ion-card-header>
     <ion-card-content>
