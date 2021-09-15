@@ -1,5 +1,7 @@
 {
   "name": "veci",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
