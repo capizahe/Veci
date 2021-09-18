@@ -1,0 +1,24 @@
+<ion-card>
+  <div class="category">
+    <ion-card-subtitle>{{this.product.category}}</ion-card-subtitle>
+  </div>
+  <div class="like">
+    <ion-icon name="heart"></ion-icon>
+  </div>
+  <div class="content">
+    <div class="product-image">
+      <img [src]="this.product.imageUrl">
+    </div>
+    <div class="product-info">
+      <ion-card-title>{{this.product.name}}</ion-card-title>
+    </div>
+  </div>
+  <div class="pricing">
+    <div class="pricing-regular">
+      <ion-card-title>{{this.product.price}}</ion-card-title>
+    </div>
+    <div class="pricing-promo">
+      <ion-card-title>{{this.product.discountPrice}}</ion-card-title>
+    </div>
+  </div>
+</ion-card>
