@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-searchbar showCancelButton="focus"></ion-searchbar>
+
+  <ion-icon class="filter" name="filter"></ion-icon>
+
   <div *ngFor="let product of products">
 
     <app-product-card [product]="product"></app-product-card>
