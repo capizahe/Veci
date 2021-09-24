@@ -1,0 +1,27 @@
+<ion-card class="card no-scroll">
+  <div class="category">
+    <span>{{this.store.Category.name}}</span>
+  </div>
+  <div class="like" #like (click)="likeProduct()">
+    <ion-icon name="heart"></ion-icon>
+  </div>
+  <div class="content">
+    <div class="product-image">
+      <img [src]="this.store.image_logo">
+    </div>
+    <div class="product-info">
+      <span>{{this.store.name}}</span>
+    </div>
+  </div>
+  <!-- <div class="pricing">
+    <div class="pricing-regular" #regularPrice>
+      <span>{{this.product.price | currency:'USD': true:'2.0'}}</span>
+    </div>
+    <div *ngIf="this.product.discountPrice !== 0" class="pricing-promo">
+      <span>{{this.product.discountPrice | currency:'USD': true:'2.0'}}</span>
+
+     <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus autem obcaecati eum totam temporibus atque
+        fuga dolor, eligendi.</span>
+    </div>
+  </div> -->
+</ion-card>

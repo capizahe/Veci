@@ -1,13 +1,5 @@
 <div id="container">
-  <ion-card *ngFor="let store of stores" class="product-card" (click)="openStore(store)">
-    <ion-card-header>
-      <img [src]="this.store.imageLogo" class="card-image" alt="">
-      <span>{{this.store.name}}</span>
-    </ion-card-header>
-    <ion-card-content>
-      <p>{{this.store.distance}}</p>
-      <p>{{this.store.deliveryTime}}</p>
-      <p>{{this.store.score}}</p>
-    </ion-card-content>
-  </ion-card>
+  <div *ngFor="let store of stores" class="product-card" (click)="openStore(store)">
+    <app-store-card [store]="store"></app-store-card>
+  </div>
 </div>

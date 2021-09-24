@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
+import { StoreCategory } from './store-category';
 
 export class Store {
 
@@ -5,18 +8,16 @@ export class Store {
     name: string;
     address: string;
     neighborhood: string;
-    phoneNumber: string;
-    score: number;
-    distance: number;
-    imageLogo: string;
-    startTime: Date;
-    endTime: Date;
-    minimumOrder: number;
-    deliveryFee: number;
-    deliveryTime: string;
-    createdDate: Date;
-    modifiedDate: Date;
-    businessStatus: number;
-
+    phone_number: string;
+    start_time: string;
+    end_time: string;
+    image_logo: string;
+    delivery_fee: number;
+    minimum_order: number;
+    delivery_time: number;
+    business_status: string;
+    CategoryId: number;
+    Category: StoreCategory;
+    //Aux
 
 }

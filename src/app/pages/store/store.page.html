@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{storeId}}</ion-title>
+    <div class="info-toolbar">
+      <img *ngIf="this.store" [src]="this.store.image_logo" alt="">
+      <ion-title><span>{{defaultName}}</span></ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
