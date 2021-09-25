@@ -1,0 +1,27 @@
+<ion-card class="card no-scroll" (click)="openStore()">
+  <div class="category">
+    <span>{{this.store.Category.name}}</span>
+  </div>
+  <div class="like" #like (click)="likeProduct(); $event.stopPropagation()">
+    <ion-icon name="heart"></ion-icon>
+  </div>
+  <div class="content">
+    <div class="product-image">
+      <img [src]="this.store.image_logo">
+    </div>
+    <div class="product-info">
+      <span>{{this.store.name}}</span>
+    </div>
+  </div>
+  <div class="meta-info">
+    <div class="distance">
+      <ion-icon name="storefront-outline"></ion-icon>
+      <span> 850 M</span>
+      <!--Obtener distancia entre dos puntos GOOGLE-->
+    </div>
+    <div class="delivery-time">
+      <ion-icon name="bicycle-outline"></ion-icon>
+      <span> {{this.store.delivery_time}} MIN</span>
+    </div>
+  </div>
+</ion-card>

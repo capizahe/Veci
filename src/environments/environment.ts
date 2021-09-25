@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
 
-  productServiceURL: 'http://localhost:5555/product'
+  productServiceURL: 'http://localhost:5555/product',
+  storeServiceURL: 'http://localhost:1234/store',
+  storeCategoryServiceURL: 'http://localhost:1234/category'
+
 
 };
 

@@ -1,3 +1,7 @@
+.card {
+    height: auto;
+}
+
 .content {
     display: flex;
     justify-content: center;
@@ -12,14 +16,13 @@
     }
 
     .product-image {
-        min-width: 40%;
+        min-width: 35%;
         height: 100px;
         display: flex;
         overflow: hidden;
         justify-content: left;
-        align-items: flex-end;
+        align-items: center;
         margin: 0%;
-        overflow: hidden;
         img {
             width: 75px;
             height: 75px;
@@ -37,9 +40,12 @@
     align-items: center;
     width: 150px;
     background-color: firebrick;
-    color: whitesmoke;
-    font-weight: bold;
     border-radius: 5%;
+
+    span {
+        color: white;
+        font-weight: bolder;
+    }
 }
 
 .like {
@@ -48,20 +54,16 @@
     right: 3%;
 }
 
-.pricing {
+.meta-info {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 5px;
 
-    .pricing-normal,
-    .pricing-promo {
+    .distance,
+    .delivery-time {
         padding-left: 20px;
         padding-right: 20px;
-    }
-
-    .pricing-promo {
-        color: red;
     }
 }
