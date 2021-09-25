@@ -15,6 +15,12 @@ export class HomePage implements OnInit {
   stores: Array<Store>;
   category: StoreCategory;
 
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400,
+    autoplay: true
+  };
+
   constructor(private router: Router, private storeService: StoreServiceService, private alertController: AlertController) { }
 
   ngOnInit() {

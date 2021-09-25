@@ -7,7 +7,7 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <div class="carousel">
-    <ion-slides>
+    <ion-slides [options]="this.slideOpts" pager="true">
       <ion-slide>
         <img
           src="https://speisekarte.menu/storage/media/company_images/1433746/good-food-display-nci-visuals-online-1543631835.jpg"
@@ -15,18 +15,17 @@
       </ion-slide>
       <ion-slide>
         <img
-          src="https://speisekarte.menu/storage/media/company_images/1433746/good-food-display-nci-visuals-online-1543631835.jpg"
+          src="https://laopinion.com/wp-content/uploads/sites/3/2019/06/dia-del-padre-ofertas.jpg?quality=80&strip=all&w=1200"
           alt="" srcset="">
       </ion-slide>
       <ion-slide>
-        <img
-          src="https://speisekarte.menu/storage/media/company_images/1433746/good-food-display-nci-visuals-online-1543631835.jpg"
-          alt="" srcset="">
+        <img src="https://partiudisneyparks.com/wp-content/uploads/2020/02/docking-bay-7-restaurant-disney.jpg" alt=""
+          srcset="">
       </ion-slide>
     </ion-slides>
   </div>
   <div class="container">
-    <ion-searchbar showCancelButton="focus"></ion-searchbar>
+    <ion-searchbar showCancelButton="focus" placeholder="Buscar tienda"></ion-searchbar>
     <div class="products">
       <div id="container">
         <div *ngFor="let store of stores" class="product-card">
