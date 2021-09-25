@@ -1,5 +1,5 @@
 .card {
-    height: 140px;
+    height: auto;
 }
 
 .content {
@@ -16,7 +16,7 @@
     }
 
     .product-image {
-        min-width: 40%;
+        min-width: 35%;
         height: 100px;
         display: flex;
         overflow: hidden;
@@ -39,7 +39,7 @@
     justify-content: center;
     align-items: center;
     width: 150px;
-    background-color: red;
+    background-color: firebrick;
     border-radius: 5%;
 
     span {
@@ -54,20 +54,16 @@
     right: 3%;
 }
 
-.pricing {
+.meta-info {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 5px;
 
-    .pricing-normal,
-    .pricing-promo {
+    .distance,
+    .delivery-time {
         padding-left: 20px;
         padding-right: 20px;
-    }
-
-    .pricing-promo {
-        color: red;
     }
 }

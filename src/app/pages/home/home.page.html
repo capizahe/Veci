@@ -28,7 +28,11 @@
   <div class="container">
     <ion-searchbar showCancelButton="focus"></ion-searchbar>
     <div class="products">
-      <app-explore-container></app-explore-container>
+      <div id="container">
+        <div *ngFor="let store of stores" class="product-card">
+          <app-store-card [store]="store"></app-store-card>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

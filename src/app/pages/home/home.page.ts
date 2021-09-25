@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { Store } from '../model/store';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { StoreServiceService } from '../services/store-service.service';
-import { StoreCategory } from '../model/store-category';
+import { StoreCategory } from 'src/app/model/store-category';
+import { StoreServiceService } from 'src/app/services/store-service.service';
+import { Store } from '../../model/store';
 
 @Component({
-  selector: 'app-explore-container',
-  templateUrl: './explore-container.component.html',
-  styleUrls: ['./explore-container.component.scss'],
+  selector: 'app-tab1',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
-export class ExploreContainerComponent implements OnInit {
+export class HomePage implements OnInit {
 
   stores: Array<Store>;
   category: StoreCategory;
@@ -19,11 +19,6 @@ export class ExploreContainerComponent implements OnInit {
 
   ngOnInit() {
     this.loadStores();
-  }
-
-  openStore(store: Store) {
-    console.log('opening store ', store);
-    this.router.navigateByUrl(`/store/${store.id}`);
   }
 
   loadStores() {
