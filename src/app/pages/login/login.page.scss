@@ -1,0 +1,39 @@
+ion-content {
+    font-family: "Open Sans", sans-serif;
+    --ion-background-color: #67a639 !important;
+}
+
+.brand {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffffff;
+
+    #name {
+        margin: 2%;
+        font-size: 50px;
+        font-weight: lighter;
+    }
+
+    #desc {
+        font-size: small;
+    }
+}
+
+.login {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 1%;
+    padding: 2%;
+    ion-button {
+        margin: 5%;
+        font-size: small;
+    }
+}
