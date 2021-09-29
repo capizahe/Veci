@@ -1,6 +1,12 @@
 ion-content {
-    font-family: "Open Sans", sans-serif;
-    --ion-background-color: #67a639 !important;
+    font-family: "Raleway", sans-serif;
+    --ion-background-color: linear-gradient(
+        0deg,
+        rgba(44, 85, 21, 1) 0%,
+        rgba(55, 106, 26, 1) 35%,
+        rgba(103, 166, 57, 1) 100%
+    ) !important;
+    overflow-y: hidden;
 }
 
 .brand {
@@ -34,6 +40,5 @@ ion-content {
     padding: 2%;
     ion-button {
         margin: 5%;
-        font-size: small;
     }
 }

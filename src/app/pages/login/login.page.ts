@@ -4,7 +4,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Observable } from 'rxjs';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -13,35 +13,52 @@ import { Platform } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  user: Observable<firebase.User>;
+  private user: Observable<firebase.User>;
+  private email;
+  private id;
 
-  constructor(private router: Router, private googlePlus: GooglePlus, private platform: Platform, private auth: AngularFireAuth) {
+  constructor(public alertController: AlertController, private router: Router,
+    private googlePlus: GooglePlus, private platform: Platform, private auth: AngularFireAuth) {
 
     this.user = this.auth.authState;
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this.user.subscribe(user => {
+    await this.user.subscribe(user => {
 
       if (user) {
         console.log('user logged in', user.email);
+        this.email = user.email;
+        this.id = user.uid;
+        this.presentAlert().then(() => {
+          this.router.navigateByUrl('/tabs');
+        });
       } else {
         console.log('user not logged in');
       }
-
     });
-
   }
 
   googleLogin() {
 
     if (this.platform.is('cordova')) {
-      this.nativeGoogleLogin();
+      this.nativeGoogleLogin()
+        .then(user => {
+          if (user) {
+            console.log(user);
+
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     } else {
-      this.webGoogleLogin();
-      //      this.router.navigateByUrl('/tabs');
+      this.webGoogleLogin()
+        .then(user => {
+          console.log(user);
+        });
     }
 
   }
@@ -68,10 +85,20 @@ export class LoginPage implements OnInit {
       const provider = new firebase.auth.GoogleAuthProvider();
       const credential = await this.auth.signInWithPopup(provider);
 
-      console.log(credential.user);
+      return credential;
 
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      //cssClass: 'my-custom-class',
+      header: `Bienvenido`,
+      message: `${this.email}`,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
