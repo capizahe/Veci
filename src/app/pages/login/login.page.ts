@@ -5,6 +5,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Observable } from 'rxjs';
 import { AlertController, Platform } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,30 +15,26 @@ import { AlertController, Platform } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  private user: Observable<firebase.User>;
   private email;
   private id;
 
   constructor(public alertController: AlertController, private router: Router,
-    private googlePlus: GooglePlus, private platform: Platform, private auth: AngularFireAuth) {
-
-    this.user = this.auth.authState;
+    private platform: Platform, private auth: AngularFireAuth, private loginService: LoginService) {
 
   }
 
-  async ngOnInit() {
+  ngOnInit() {
 
-    await this.user.subscribe(user => {
+    //Validate if user it is logged already in the system
+
+    this.loginService.getUser().subscribe(user => {
 
       if (user) {
-        console.log('user logged in', user.email);
         this.email = user.email;
         this.id = user.uid;
         this.presentAlert().then(() => {
           this.router.navigateByUrl('/tabs');
         });
-      } else {
-        console.log('user not logged in');
       }
     });
   }
@@ -63,30 +61,29 @@ export class LoginPage implements OnInit {
 
   }
 
+  // NEED-FIX
+  facebookLogin() {
+
+    if (this.platform.is('cordova')) {
+    } else {
+    }
+  }
+
   async nativeGoogleLogin(): Promise<any> {
     try {
 
-      const gplusUser = await this.googlePlus.login({
-        webClientId: '221788106045-trn14ssklpbg0hsnov8mu2hfnduurqel.apps.googleusercontent.com',
-        offline: false,
-        scopes: 'profile email'
-      });
-
-      return await this.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken));
+      const auth = await this.loginService.nativeLogin();
+      return auth;
 
     } catch (error) {
       console.log(error);
     }
   }
 
-  async webGoogleLogin(): Promise<any> {
+  async webGoogleLogin() {
     try {
-
-      const provider = new firebase.auth.GoogleAuthProvider();
-      const credential = await this.auth.signInWithPopup(provider);
-
-      return credential;
-
+      const auth = await this.loginService.webGoogleLogin();
+      return auth;
     } catch (error) {
       console.log(error);
     }

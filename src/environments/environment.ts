@@ -5,6 +5,9 @@
 export const environment = {
   production: false,
   // eslint-disable-next-line @typescript-eslint/naming-convention
+
+  webClientId: '221788106045-trn14ssklpbg0hsnov8mu2hfnduurqel.apps.googleusercontent.com',
+
   productServiceURL: 'http://localhost:5555/product',
   storeServiceURL: 'http://localhost:1234/store',
   storeCategoryServiceURL: 'http://localhost:1234/category',
