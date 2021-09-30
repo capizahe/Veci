@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "veci-dev-1efaf": {
+      "hosting": {
+        "app": [
+          "veci-dev-1efaf"
+        ]
+      }
+    }
+  }
+}

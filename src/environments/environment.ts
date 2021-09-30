@@ -4,12 +4,24 @@
 
 export const environment = {
   production: false,
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+
+  webClientId: '221788106045-trn14ssklpbg0hsnov8mu2hfnduurqel.apps.googleusercontent.com',
 
   productServiceURL: 'http://localhost:5555/product',
   storeServiceURL: 'http://localhost:1234/store',
-  storeCategoryServiceURL: 'http://localhost:1234/category'
+  storeCategoryServiceURL: 'http://localhost:1234/category',
 
 
+  firebaseConfig: {
+    apiKey: 'AIzaSyBw8X0VPSyros8mEyitmZAG2NWmcIvlc1s',
+    authDomain: 'veci-dev-1efaf.firebaseapp.com',
+    projectId: 'veci-dev-1efaf',
+    storageBucket: 'veci-dev-1efaf.appspot.com',
+    messagingSenderId: '221788106045',
+    appId: '1:221788106045:web:2282d81ff19579a10e2954',
+    measurementId: 'G-31EWWFG425'
+  }
 };
 
 /*
