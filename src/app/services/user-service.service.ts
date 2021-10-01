@@ -39,6 +39,32 @@ export class UserService {
     return this.httpClient.get<User[]>(URL, { params: params });
   }
 
+
+  createUser(user: User) {
+
+    const URL = this.userService + '/create';
+
+    const body = {
+      name: user.name,
+      last_name: 'asd',
+      address: user.address,
+      departament: 'asd',
+      neighborhood: 'sasd',
+      country: 'asd',
+      email: user.email,
+      phone_number: user.phone_number,
+      user_account_id: user.user_account_id,
+      city: 'asd',
+      geo_location: 'asd'
+
+    };
+
+    return this.httpClient.post<any>(URL, body);
+
+
+
+  }
+
   setUser(user: User) {
     this.user = user;
   }
