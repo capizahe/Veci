@@ -36,14 +36,16 @@ export class LoginService {
     const gplusUser = await this.googlePlus.login({
       webClientId: environment.webClientId,
       offline: false,
-      scopes: 'profile email'
+      scopes: 'profile email phone'
     });
 
     return await this.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser));
   }
 
   async webGoogleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
+
+    const provider = new firebase.auth.GoogleAuthProvider().addScope('phone');
+
     return await this.auth.signInWithPopup(provider);
   }
 

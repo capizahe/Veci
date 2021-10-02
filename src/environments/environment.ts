@@ -8,6 +8,7 @@ export const environment = {
 
   webClientId: '221788106045-trn14ssklpbg0hsnov8mu2hfnduurqel.apps.googleusercontent.com',
 
+  userServiceURL: 'http://localhost:3000/user',
   productServiceURL: 'http://localhost:5555/product',
   storeServiceURL: 'http://localhost:1234/store',
   storeCategoryServiceURL: 'http://localhost:1234/category',

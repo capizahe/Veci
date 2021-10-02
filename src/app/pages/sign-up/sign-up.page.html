@@ -1,0 +1,84 @@
+<ion-header [translucent]="true">
+
+</ion-header>
+
+<ion-content>
+
+  <ion-slides [options]="this.options" #slides>
+
+    <ion-slide>
+      <ion-card>
+        <ion-card-subtitle>
+          <ion-label position="floating">¿Cómo te llamas?</ion-label>
+        </ion-card-subtitle>
+        <ion-card-content>
+          <ion-item>
+            <ion-input autocomplete="given-name" [value]="this.name" [(ngModel)]="this.name" [required]="true">
+            </ion-input>
+          </ion-item>
+          <ion-button (click)="this.nextSlide()">
+            Siguiente
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-subtitle>
+          <ion-label position="floating">¿Cúal es tu numero de telefono?</ion-label>
+        </ion-card-subtitle>
+        <ion-card-content>
+          <ion-item>
+            <ion-input autocomplete="phone" [value]="this.phoneNumber" [(ngModel)]="this.phoneNumber"
+              placeholder="ej. 3042544444" [required]="true">
+            </ion-input>
+          </ion-item>
+          <ion-button (click)="this.nextSlide()">
+            Siguiente
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide>
+      <ion-card>
+        <ion-card-subtitle>
+          <ion-label position="floating">¿Cual es tu dirección?</ion-label>
+        </ion-card-subtitle>
+        <ion-card-content>
+          <ion-item>
+            <ion-input [required]="true" [(ngModel)]="this.address" placeholder="ej. Carrera 2 #43-12"></ion-input>
+          </ion-item>
+          <ion-button (click)="this.nextSlide(true)">
+            Siguiente
+          </ion-button>
+          <!-- <div class="mapouter">
+            <div class="gmap_canvas"><iframe width="auto" height="500" id="gmap_canvas"
+                src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+                href="https://fmovies-online.net"></a><br>
+              <style>
+                .mapouter {
+                  position: relative;
+                  height: 60%;
+                  width: 100%;
+                }
+
+                .gmap_canvas {
+                  overflow: hidden;
+                  background: none !important;
+                  height: 60%;
+                  width: 100%;
+                }
+              </style>
+            </div>
+          </div>-->
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+
+  </ion-slides>
+
+
+</ion-content>

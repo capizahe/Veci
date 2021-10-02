@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { AlertController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user-service.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-login',
@@ -15,11 +17,14 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class LoginPage implements OnInit {
 
+  loading = false;
+
   private email;
   private id;
 
+
   constructor(public alertController: AlertController, private router: Router,
-    private platform: Platform, private auth: AngularFireAuth, private loginService: LoginService) {
+    private platform: Platform, private loginService: LoginService, private userService: UserService) {
 
   }
 
@@ -30,11 +35,26 @@ export class LoginPage implements OnInit {
     this.loginService.getUser().subscribe(user => {
 
       if (user) {
+        this.loading = true;
         this.email = user.email;
         this.id = user.uid;
-        this.presentAlert().then(() => {
-          this.router.navigateByUrl('/tabs');
-        });
+        this.userService.getUserInfo(this.email, this.id)
+          .subscribe({
+            next: (userdb) => {
+              console.log(userdb);
+              if (userdb && userdb.length === 1) {
+                this.userService.setUser(userdb[0]);
+                this.router.navigateByUrl('/tabs');
+              } else {
+                //User it is not in the db yet - redirect to signup page
+                this.router.navigateByUrl('/sign-up');
+              }
+            },
+            error: (error) => {
+              this.presentAlert('ERROR', 'ha ocurrido un error');
+              console.log('ha ocurrido un error', error);
+            }
+          });
       }
     });
   }
@@ -54,8 +74,28 @@ export class LoginPage implements OnInit {
         });
     } else {
       this.webGoogleLogin()
-        .then(user => {
-          console.log(user);
+        .then(data => {
+          this.userService.getUserInfo(data.user.email, data.user.uid)
+            .subscribe({
+              next: (userdb) => {
+                console.log(userdb);
+                if (userdb && userdb.length === 1) {
+                  this.userService.setUser(userdb[0]);
+                  this.router.navigateByUrl('/tabs');
+                } else {
+                  //User it is not in the db yet - redirect to signup page
+                  this.router.navigateByUrl('/sign-up');
+                }
+              },
+              error: (error) => {
+                this.presentAlert('ERROR', 'ha ocurrido un error');
+                console.log('ha ocurrido un error', error);
+              }
+            });
+        })
+        .catch((reason) => {
+          this.presentAlert('ERROR', 'ha ocurrido un error');
+          console.log(reason);
         });
     }
 
@@ -89,11 +129,11 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async presentAlert() {
+  async presentAlert(messageType: string, message: string) {
     const alert = await this.alertController.create({
       //cssClass: 'my-custom-class',
-      header: `Bienvenido`,
-      message: `${this.email}`,
+      header: `${messageType}`,
+      message: `${message}`,
       buttons: ['OK']
     });
     await alert.present();
