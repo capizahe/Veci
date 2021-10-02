@@ -55,8 +55,6 @@ export class LoginPage implements OnInit {
               console.log('ha ocurrido un error', error);
             }
           });
-        console.log(`user ${this.email} already logged in`);
-        //this.router.navigateByUrl('/tabs');
       }
     });
   }
