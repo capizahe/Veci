@@ -60,8 +60,11 @@ export class UserService {
     };
 
     return this.httpClient.post<any>(URL, body);
+  }
 
-
+  getAllUsers() {
+    const URL = this.userService + '/all';
+    return this.httpClient.get<User[]>(URL);
 
   }
 

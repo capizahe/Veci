@@ -6,7 +6,6 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { environment } from 'src/environments/environment';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -33,13 +32,9 @@ export class LoginService {
    */
   async nativeLogin() {
 
-    const gplusUser = await this.googlePlus.login({
-      webClientId: environment.webClientId,
-      offline: false,
-      scopes: 'profile email phone'
-    });
+    const gplusUser = await this.googlePlus.login({});
 
-    return await this.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser));
+    return await this.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(null, gplusUser.accessToken));
   }
 
   async webGoogleLogin() {

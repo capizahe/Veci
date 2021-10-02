@@ -30,6 +30,12 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
+    this.userService.getAllUsers().subscribe(users => {
+      console.log(users.length);
+    }, error => {
+      console.log(error);
+    });
+
     //Validate if user it is logged already in the system
 
     this.loginService.getUser().subscribe(user => {
