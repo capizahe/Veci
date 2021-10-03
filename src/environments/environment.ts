@@ -13,7 +13,6 @@ export const environment = {
   storeServiceURL: 'http://192.168.1.108:1234/store',
   storeCategoryServiceURL: 'http://192.168.8.106:1234/category',
 
-
   firebaseConfig: {
     apiKey: 'AIzaSyBw8X0VPSyros8mEyitmZAG2NWmcIvlc1s',
     authDomain: 'veci-dev-1efaf.firebaseapp.com',
