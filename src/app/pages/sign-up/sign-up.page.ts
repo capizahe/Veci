@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user-service.service';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { Router } from '@angular/router';
 
 // eslint-disable-next-line no-var
 declare var google;
@@ -47,7 +48,7 @@ export class SignUpPage implements OnInit {
   enableMap = false;
   description: string;
 
-  constructor(private loginService: LoginService, private userService: UserService,
+  constructor(private router: Router, private loginService: LoginService, private userService: UserService,
     private geoLocation: Geolocation, private nativeGeoCoder: NativeGeocoder,
     public zone: NgZone, private platform: Platform, private alertController: AlertController) {
 
@@ -179,10 +180,12 @@ export class SignUpPage implements OnInit {
     console.log(newUser);
     this.userService.createUser(newUser).subscribe({
       next: (data) => {
-        console.log(data);
+        if (data && data.token) {
+          this.router.navigateByUrl('/tabs');
+        }
       },
       error: (error) => {
-        // this.presentAlert('ERROR', 'Ha ocurrido un error al intentar crear el usuario');
+        this.presentErrorAlert('ERROR', 'Ha ocurrido un error al intentar crear el usuario. Por favor intenta mas tarde');
         console.log(error);
       }
     });
@@ -266,7 +269,7 @@ export class SignUpPage implements OnInit {
         }
       },
       {
-        text: 'Vefificar',
+        text: 'Verificar',
         handler: () => {
           this.enableMap = false;
           this.slides.slideTo(0);
