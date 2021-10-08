@@ -3,7 +3,7 @@
     <name>VeciApp</name>
     <description>Pide domicilos en tus tiendas de barrio</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Veci Team</author>
-    <content original-src="index.html" src="http://0.0.0.0:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-intent href="http://*/*" />

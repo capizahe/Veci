@@ -1,5 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, Platform } from '@ionic/angular';
+import { AlertController, IonSlides, Platform } from '@ionic/angular';
 import { User } from 'src/app/model/user';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user-service.service';
@@ -9,7 +9,6 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 
 // eslint-disable-next-line no-var
 declare var google;
-
 
 @Component({
   selector: 'app-sign-up',
@@ -21,7 +20,7 @@ export class SignUpPage implements OnInit {
   @ViewChild('slides') slides: IonSlides;
   @ViewChild('map', { static: false }) mapElement: ElementRef;
 
-  //MAP VARIABLES
+  //map variables
   map: any;
   mapAddress: string;
   lat: string;
@@ -31,19 +30,26 @@ export class SignUpPage implements OnInit {
   location: any;
   placeid: any;
   googleAutoComplete: any;
-  //END MAP VARIABLES
 
+  //SingUp user variables
   name: string;
   lastName: string;
   phoneNumber: string;
   address: string;
   email: string;
   userid: string;
+  country: string;
+  state: string;
+  city: string;
 
+  //aux variables
   options: any;
+  enableMap = false;
+  description: string;
 
   constructor(private loginService: LoginService, private userService: UserService,
-    private geoLocation: Geolocation, private nativeGeoCoder: NativeGeocoder, public zone: NgZone, private platform: Platform) {
+    private geoLocation: Geolocation, private nativeGeoCoder: NativeGeocoder,
+    public zone: NgZone, private platform: Platform, private alertController: AlertController) {
 
     this.googleAutoComplete = new google.maps.places.AutocompleteService();
     this.autoComplete = { input: '' };
@@ -62,6 +68,7 @@ export class SignUpPage implements OnInit {
       this.phoneNumber = user.phoneNumber;
       this.email = user.email;
       this.userid = user.uid;
+      console.log(this.email);
     });
 
   }
@@ -71,28 +78,26 @@ export class SignUpPage implements OnInit {
   }
 
 
-  nextSlide(end?: boolean) {
-    this.slides.slideNext();
-
-    if (end) {
-
-      const newUser = new User();
-
-      newUser.name = this.name;
-      newUser.phone_number = this.phoneNumber;
-      newUser.address = this.address;
-      newUser.email = this.email;
-      newUser.user_account_id = this.userid;
-
-      this.userService.createUser(newUser).subscribe({
-        next: (data) => {
-          console.log(data);
-        },
-        error: (error) => {
-          console.log(error);
+  nextSlide(end?: boolean, field?: string) {
+    //Pendiente hacer validaciónes ej. regex phone number
+    switch (field) {
+      case 'phone':
+        if (!this.phoneNumber || this.phoneNumber.length < 5) {
+          this.presentErrorAlert('ERROR', 'El numero de telefono no puede ir vacío.');
+        } else {
+          if (end) {
+            this.enableMap = true;
+            this.loadMap();
+          }
         }
-      });
-
+        break;
+      case 'name':
+        if (!this.name || this.name.length < 5) {
+          this.presentErrorAlert('ERROR', 'El nombre no puede ir vacío.');
+        } else {
+          this.slides.slideNext();
+        }
+        break;
     }
   }
 
@@ -103,30 +108,24 @@ export class SignUpPage implements OnInit {
       const options = {
         enableHighAccuracy: true, timeout: 60000
       };
-
-      //Obtener cordenadas desde telefono
-
       this.geoLocation.getCurrentPosition(options).then((resp) => {
-        this.autoComplete.input = `${resp.coords.latitude}, ${resp.coords.longitude}`;
-        console.log('CURRENT POSITION', resp.coords.latitude, resp.coords.longitude);
-        /*
-              const latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
 
-              const mapOptions = {
-                center: latLng,
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              };
+        const latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
 
-              //Pasar las coordenadas al mapa de google
-              this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
-              this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-              this.map.addListener('tilesloaded', () => {
-                console.log('accuracy', this.map, this.map.center.lat());
-                this.getAddressFromCoords(this.map.center.lat(), this.map.center.lng());
-                this.lat = this.map.center.lat();
-                this.long = this.map.center.lng();
-              });*/
+        const mapOptions = {
+          center: latLng,
+          zoom: 40,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //Pasar las coordenadas al mapa de google
+        this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+        this.map.addListener('tilesloaded', () => {
+          console.log('accuracy', this.map, this.map.center.lat());
+          this.lat = this.map.center.lat();
+          this.long = this.map.center.lng();
+        });
       }).catch((error) => {
         console.log('Error getting location', error);
 
@@ -165,9 +164,28 @@ export class SignUpPage implements OnInit {
 
   }
 
-  //FUNCION DEL BOTON INFERIOR PARA QUE NOS DIGA LAS COORDENADAS DEL LUGAR EN EL QUE POSICIONAMOS EL PIN.
   showCords() {
-    alert('lat' + this.lat + ', long' + this.long);
+
+    const newUser = new User();
+    newUser.name = this.name;
+    newUser.phone_number = this.phoneNumber;
+    newUser.address = this.description;
+    newUser.geo_location = `${this.lat},${this.long}`;
+    newUser.email = this.email;
+    newUser.user_account_id = this.userid;
+    newUser.city = this.city;
+    newUser.country = this.country;
+    newUser.departament = this.state;
+    console.log(newUser);
+    this.userService.createUser(newUser).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        // this.presentAlert('ERROR', 'Ha ocurrido un error al intentar crear el usuario');
+        console.log(error);
+      }
+    });
   }
 
   //AUTOCOMPLETE, SIMPLEMENTE ACTUALIZAMOS LA LISTA CON CADA EVENTO DE ION CHANGE EN LA VISTA.
@@ -187,12 +205,43 @@ export class SignUpPage implements OnInit {
       });
   }
 
-  //FUNCION QUE LLAMAMOS DESDE EL ITEM DE LA LISTA.
   selectSearchResult(item) {
-    //AQUI PONDREMOS LO QUE QUERAMOS QUE PASE CON EL PLACE ESCOGIDO, GUARDARLO, SUBIRLO A FIRESTORE.
-    //HE AÑADIDO UN ALERT PARA VER EL CONTENIDO QUE NOS OFRECE GOOGLE Y GUARDAMOS EL PLACEID PARA UTILIZARLO POSTERIORMENTE SI QUEREMOS.
-    alert(JSON.stringify(item));
+
+    this.description = item.description;
     this.placeid = item.place_id;
+    this.address = item.terms[0].value;
+    this.city = item.terms[item.terms.length - 3].value;
+    this.state = item.terms[item.terms.length - 2].value;
+    this.country = item.terms[item.terms.length - 1].value;
+
+    const place = new google.maps.places.PlacesService(this.map);
+    place.getDetails({
+      placeId: this.placeid
+    }, (result, status) => {
+      if (google.maps.places.PlacesServiceStatus.OK === 'OK') {
+        console.log(status);
+        console.log(result.geometry.location.toString());
+        this.lat = result.geometry.location.lat();
+        this.long = result.geometry.location.lng();
+        this.getAddressFromCoords(result.geometry.location.lat(), result.geometry.location.lng());
+
+        //Crea un marcador en el mapa.
+        const marker = new google.maps.Marker({
+          map: this.map,
+          place: {
+            placeId: this.placeid,
+            location: result.geometry.location
+          }
+        });
+
+        //Centra el mapa en nueva posición
+        const position = new google.maps.LatLng(this.lat, this.long);
+        this.map.setCenter(position);
+
+        //Clean items
+        this.autoCompleteItems = [];
+      }
+    });
   }
 
 
@@ -202,10 +251,44 @@ export class SignUpPage implements OnInit {
     this.autoComplete.input = '';
   }
 
-  //EJEMPLO PARA IR A UN LUGAR DESDE UN LINK EXTERNO, ABRIR GOOGLE MAPS PARA DIRECCIONES.
-  goTo() {
-    return window.location.href = 'https://www.google.com/maps/search/?api=1&query=Google&query_place_id=' + this.placeid;
+
+  async presentConfirmAlert(messageType: string, message: string) {
+    const alert = await this.alertController.create({
+      //cssClass: 'my-custom-class',
+      header: `${messageType}`,
+      mode: 'ios',
+      message: `${message}`,
+      translucent: true,
+      buttons: [{
+        text: 'Confirmar',
+        handler: () => {
+          this.showCords();
+        }
+      },
+      {
+        text: 'Vefificar',
+        handler: () => {
+          this.enableMap = false;
+          this.slides.slideTo(0);
+        }
+      }]
+    });
+    await alert.present();
+  }
+
+  async presentErrorAlert(messageType: string, message: string) {
+    const alert = await this.alertController.create({
+      //cssClass: 'my-custom-class',
+      header: `${messageType}`,
+      message: `${message}`,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
 
+  triggerConfirmAlert() {
+    this.presentConfirmAlert('Validación',
+      'Seguro que quieres continuar, está información será la que te permitirá encontrar las tiendas mas cercanas');
+  }
 }
