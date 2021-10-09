@@ -45,17 +45,17 @@ export class UserService {
     const URL = this.userService + '/create';
 
     const body = {
-      name: user.name,
-      last_name: 'asd',
-      address: user.address,
-      departament: 'asd',
-      neighborhood: 'sasd',
-      country: 'asd',
       email: user.email,
+      name: user.name,
+      last_name: 'N/A',
+      address: user.address,
+      departament: user.departament,
+      neighborhood: 'N/A',
+      country: user.country,
       phone_number: user.phone_number,
       user_account_id: user.user_account_id,
-      city: 'asd',
-      geo_location: 'asd'
+      city: user.city,
+      geo_location: user.geo_location
 
     };
 

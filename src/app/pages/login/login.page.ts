@@ -30,12 +30,6 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
-    this.userService.getAllUsers().subscribe(users => {
-      console.log(users.length);
-    }, error => {
-      console.log(error);
-    });
-
     //Validate if user it is logged already in the system
 
     this.loginService.getUser().subscribe(user => {
@@ -57,7 +51,8 @@ export class LoginPage implements OnInit {
               }
             },
             error: (error) => {
-              this.presentAlert('ERROR', 'ha ocurrido un error');
+              this.loading = false;
+              this.presentAlert('ERROR', 'ha ocurrido un error por favor intenta mas tarde');
               console.log('ha ocurrido un error', error);
             }
           });
