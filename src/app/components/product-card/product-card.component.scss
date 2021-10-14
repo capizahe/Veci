@@ -36,7 +36,7 @@
     justify-content: center;
     align-items: center;
     width: 150px;
-    background-color: firebrick;
+    background-color: var(--ion-color-primary);
     color: whitesmoke;
     font-weight: bold;
     border-radius: 5%;
@@ -64,4 +64,11 @@
     .pricing-promo {
         color: red;
     }
+}
+
+.option {
+    position: absolute;
+    left: 85% !important;
+    top: 75% !important;
+    font-size: x-large;
 }

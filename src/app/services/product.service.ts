@@ -21,4 +21,9 @@ export class ProductService {
     const URL = this.productServiceURL + '/getAllProductsByStore/' + id;
     return this.httpClient.get<Product[]>(URL);
   }
+
+  getProductById(id: string) {
+    const URL = this.productServiceURL + '/' + id;
+    return this.httpClient.get<Product>(URL);
+  }
 }

@@ -11,4 +11,6 @@ export class Product {
     createdAt: Date;
     modifiedAt: Date;
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    Options: any;
 }

@@ -12,6 +12,7 @@ export const environment = {
   productServiceURL: 'http://192.168.1.108:5556/product',
   storeServiceURL: 'http://192.168.1.108:1234/store',
   storeCategoryServiceURL: 'http://192.168.8.106:1234/category',
+  productOptionsURL: 'http://localhost:5556/product_options',
 
   firebaseConfig: {
     apiKey: 'AIzaSyBw8X0VPSyros8mEyitmZAG2NWmcIvlc1s',
