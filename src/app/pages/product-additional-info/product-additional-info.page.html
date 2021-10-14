@@ -15,15 +15,16 @@
     </ion-card-header>
   </ion-card>
 
-  <ion-card class="card no-scroll" *ngFor="let option of options; let i = index">
-    <ion-card-header color="primary">
+  <ion-card class="card no-scroll" *ngFor="let option of options; let i = index" color="primary"
+    [class.optionSelected]="this.itemSelected" [attr.id]="i">
+    <ion-card-header>
       <ion-card-subtitle>{{option.name}}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
       <ion-list [inset]="true" lines="none">
         <ion-radio-group (ionChange)="radioGroupChange($event,i)">
-          <ion-item *ngFor="let optionValue of option.OptionValues" allow-empty-selection>
+          <ion-item *ngFor="let optionValue of option.OptionValues" allow-empty-selection class="options">
             <ion-label>{{optionValue.name}}</ion-label>
             <ion-radio slot="start" [value]="optionValue"></ion-radio>
             <ion-label slot="end" *ngIf="optionValue.additionalPrice !== 0">+ ${{optionValue.additionalPrice}}
@@ -42,11 +43,9 @@
     </ion-card-header>
   </ion-card>
 
-
-  <ion-button expand="full" color="primary" shape="round" style="margin:20px">
+  <ion-button expand="full" color="primary" shape="round" style="margin-bottom: 6%;" (click)="addProductToCart()">
     <ion-icon name="bag-add-outline"></ion-icon>
     <ion-label>Agregar al carrito</ion-label>
   </ion-button>
-
 
 </ion-content>

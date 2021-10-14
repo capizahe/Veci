@@ -24,7 +24,15 @@
         fuga dolor, eligendi.</span> -->
     </div>
   </div>
-  <div class="option" *ngIf="this.product.Options && this.product.Options.length > 0">
+  <div class="option" *ngIf="this.product.Options && this.product.Options.length > 0 ; else addToCart">
     <ion-icon name="arrow-forward-outline"></ion-icon>
   </div>
+
+  <ng-template #addToCart>
+    <div class="option">
+      <ion-icon name="bag-add"></ion-icon>
+    </div>
+  </ng-template>
+
+
 </ion-card>

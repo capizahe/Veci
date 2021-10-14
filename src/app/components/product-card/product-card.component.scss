@@ -67,10 +67,8 @@
 }
 
 .option {
-    left: 87% !important;
-    font-size: large !important;
-    display: flex;
-    margin-right: 4%;
-    margin-bottom: 1%;
-    justify-content: flex-end;
+    position: absolute;
+    left: 85% !important;
+    top: 75% !important;
+    font-size: x-large;
 }
