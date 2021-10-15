@@ -26,6 +26,7 @@
   </div>
   <div class="container">
     <ion-searchbar showCancelButton="focus" placeholder="Buscar tienda"></ion-searchbar>
+    <ion-icon class="filter" name="filter" (click)="this.displayFilter()"></ion-icon>
     <div class="products">
       <div id="container">
         <div *ngFor="let store of stores" class="product-card">

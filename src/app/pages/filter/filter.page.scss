@@ -1,0 +1,11 @@
+.values-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+
+.options {
+    flex-basis: 50%;
+}

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { FilterObject } from 'src/app/model/filter-object';
 import { StoreCategory } from 'src/app/model/store-category';
 import { LoginService } from 'src/app/services/login.service';
 import { StoreServiceService } from 'src/app/services/store-service.service';
 import { UserService } from 'src/app/services/user-service.service';
 import { Store } from '../../model/store';
+import { FilterPage } from '../filter/filter.page';
 
 @Component({
   selector: 'app-tab1',
@@ -25,7 +27,7 @@ export class HomePage implements OnInit {
   };
 
   constructor(private router: Router, private storeService: StoreServiceService, private alertController: AlertController,
-    private loginService: LoginService) { }
+    private loginService: LoginService, private modalController: ModalController) { }
 
   async ngOnInit() {
     this.loadStores();
@@ -52,10 +54,6 @@ export class HomePage implements OnInit {
       });
   }
 
-
-  loadProductCategory() {
-  }
-
   async showErrorAlert(error) {
     const alertMessage = await this.alertController.create({
       header: 'Ups... parece que ocurrio un error',
@@ -65,4 +63,33 @@ export class HomePage implements OnInit {
     alertMessage.present();
   }
 
+
+  async displayFilter() {
+
+    const categories = [];
+    await this.stores.forEach(store => {
+      if (categories.indexOf(store.Category.name) === -1) {
+        categories.push(store.Category.name);
+        console.log(`Se encontró categoria ${store.Category.name}`);
+      }
+    });
+
+    const filterObject = new FilterObject('categorias', categories);
+
+    const filterObjects = new Array<FilterObject>();
+
+    filterObjects.push(filterObject);
+
+    console.log(categories);
+
+    const modal = await this.modalController.create({
+      component: FilterPage,
+      componentProps: {
+        filterObjects
+      },
+      cssClass: 'filterModal'
+    });
+
+    await modal.present();
+  }
 }

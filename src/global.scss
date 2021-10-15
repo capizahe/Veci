@@ -30,3 +30,11 @@
     font-family: "Raleway", sans-serif;
     /* Add !important to overwrite all elements */
 }
+
+.filterModal .modal-wrapper {
+    height: 50% !important;
+    top: 25% !important;
+    width: 95%;
+    position: absolute !important;
+    display: block !important;
+}

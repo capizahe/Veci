@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-title>Filtro</ion-title>
+</ion-header>
+<ion-content>
+  <div *ngFor="let filterObject of filterObjects">
+    <ion-grid>
+      <ion-row> {{filterObject.name}}</ion-row>
+      <div class="values-container">
+        <div class="options" *ngFor="let filterObjectOptions of filterObject.options">
+          <span class="filterOptionValue">{{filterObjectOptions}}</span>
+        </div>
+
+      </div>
+
+    </ion-grid>
+
+  </div>
+
+</ion-content>

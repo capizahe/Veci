@@ -24,10 +24,9 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.product.discountPrice !== 0) {
+    if (this.product.discountPrice !== 0 && this.product && this.regularPrice) {
       console.log(this.regularPrice);
       this.regularPrice.nativeElement.style = 'text-decoration: line-through';
-
     }
   }
 
