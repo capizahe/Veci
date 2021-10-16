@@ -1,19 +1,35 @@
-<ion-header>
-  <ion-title>Filtro</ion-title>
+<ion-header class="filter-header">
+  <ion-title text-center class="text-align: center">Filtro personalizado</ion-title>
 </ion-header>
-<ion-content>
-  <div *ngFor="let filterObject of filterObjects">
-    <ion-grid>
-      <ion-row> {{filterObject.name}}</ion-row>
-      <div class="values-container">
-        <div class="options" *ngFor="let filterObjectOptions of filterObject.options">
-          <span class="filterOptionValue">{{filterObjectOptions}}</span>
+<ion-content class="filter-content">
+  <div class="filter-wrapper">
+    <div *ngFor="let filterObject of filterObjects; let i = index">
+      <ion-grid>
+        <ion-row class="category-name">
+          <ion-text text-center> {{filterObject.name}}</ion-text>
+        </ion-row>
+        <div class="values-container">
+          <div class="options" *ngFor="let filterObjectOptions of filterObject.options; let j=index"
+            (click)="optionSelected(i,j)" [attr.id]="i+''+j">
+            <ion-icon name="checkmark-outline" *ngIf="isSelected(i,j)"></ion-icon>
+            <span class="filterOptionValue">{{filterObjectOptions}}</span>
+          </div>
         </div>
-
-      </div>
-
-    </ion-grid>
-
+      </ion-grid>
+    </div>
   </div>
+  <div class="filter-buttons">
+    <ion-button expand="full" color="success" style="margin-right: 4.6%;position: relative;top: 53%;;"
+      (click)="returnFilterInput()">
+      <ion-icon name="filter-outline"></ion-icon>
+      <ion-label>Filtrar</ion-label>
+    </ion-button>
+    <ion-button expand="full" color="danger" style="margin-right: 4.6%;position: relative;top: 53%;"
+      (click)="returnFilterInput()">
+      <ion-icon name="close-circle-outline"></ion-icon>
+      <ion-label>Cerrar</ion-label>
+    </ion-button>
+  </div>
+
 
 </ion-content>

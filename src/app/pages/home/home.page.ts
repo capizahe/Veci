@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -17,6 +18,9 @@ import { FilterPage } from '../filter/filter.page';
 export class HomePage implements OnInit {
 
   stores: Array<Store>;
+  storesFiltered: Array<Store>;
+  storesUnfiltered: Array<Store>;
+
   category: StoreCategory;
   name: string;
 
@@ -42,6 +46,7 @@ export class HomePage implements OnInit {
         next: (data) => {
           console.log(data);
           this.stores = data;
+          this.storesUnfiltered = this.stores;
 
         },
         complete: () => {
@@ -74,11 +79,34 @@ export class HomePage implements OnInit {
       }
     });
 
-    const filterObject = new FilterObject('categorias', categories);
+    const distance = [];
+    await this.stores.forEach(store => {
+
+      const distanceFormat = store.delivery_time + ' M';
+
+      if (distance.indexOf(distanceFormat) === -1) {
+        distance.push(distanceFormat);
+      }
+    });
+
+    const minimumOrder = [];
+
+    await this.stores.forEach(store => {
+
+      const minimumOrderObject = store.minimum_order;
+
+      if (minimumOrder.indexOf(minimumOrderObject) === -1) {
+        minimumOrder.push(minimumOrderObject);
+      }
+    });
+
+    const filterObjectCategory = new FilterObject('categorias', categories);
+    const filterObjectDistance = new FilterObject('domicilio', distance);
+    const filterObjectMinimumOrder = new FilterObject('pedido minimo', minimumOrder);
 
     const filterObjects = new Array<FilterObject>();
 
-    filterObjects.push(filterObject);
+    filterObjects.push(filterObjectDistance, filterObjectCategory, filterObjectMinimumOrder);
 
     console.log(categories);
 
@@ -91,5 +119,70 @@ export class HomePage implements OnInit {
     });
 
     await modal.present();
+
+    modal.onWillDismiss().then(data => {
+      if (data.data) {
+        console.log(data.data.filteredObjectResponse);
+        this.filterData(data.data.filteredObjectResponse as FilterObject[]);
+      }
+    });
+
+
+  }
+
+
+  filterData(data: FilterObject[]) {
+
+    console.log(data);
+
+    this.storesUnfiltered = this.stores;
+
+    this.storesFiltered = [];
+    console.log(data.length);
+    for (let i = 0; i < data.length; i++) {
+      console.log('entro a ', data[i].name);
+
+      if (data[i].options.length > 0) {
+
+        for (let j = 0; j < data[i].options.length; j++) {
+          console.log('entro a ', data[i].name);
+          switch (data[i].name) {
+            case 'categorias':
+              this.storesFiltered = this.storesFiltered.concat(this.stores.filter((store) => store.Category.name === data[i].options[j]));
+              console.log('Status', this.storesFiltered);
+              break;
+            case 'domicilio':
+              // eslint-disable-next-line max-len
+              this.storesFiltered = this.storesFiltered.concat(this.stores.filter((store) => store.delivery_time === Number(data[i].options[j].split(' ')[0])));
+              console.log('Status', this.storesFiltered);
+              break;
+          }
+        }
+      }
+    }
+
+    if (this.storesFiltered.length > 0) {
+      this.stores = this.storesFiltered;
+    } else {
+      this.storesFiltered = null;
+    }
+  }
+
+
+  cleanFilter() {
+    this.stores = this.storesUnfiltered;
+    this.storesFiltered = null;
+  }
+
+  searchStore($event: any) {
+    const input = String($event.target.value).toLocaleLowerCase();
+    this.storesFiltered = [];
+    this.storesFiltered = this.storesFiltered.concat(this.stores.filter((store) => store.name.toLocaleLowerCase().includes(input)));
+    this.stores = this.storesFiltered;
+  }
+
+  cancelCustomSearch() {
+    this.stores = this.storesUnfiltered;
+    this.storesFiltered = null;
   }
 }

@@ -21,3 +21,14 @@ ion-slide {
     // background-repeat: repeat-y;
     --background: red;
 }
+
+.filter {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    ion-item {
+        font-size: x-small;
+    }
+}

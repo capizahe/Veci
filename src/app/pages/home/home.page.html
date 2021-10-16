@@ -25,8 +25,20 @@
     </ion-slides>
   </div>
   <div class="container">
-    <ion-searchbar showCancelButton="focus" placeholder="Buscar tienda"></ion-searchbar>
-    <ion-icon class="filter" name="filter" (click)="this.displayFilter()"></ion-icon>
+    <ion-searchbar showCancelButton="focus" placeholder="Buscar tienda" (ionInput)="searchStore($event)"
+      (ionCancel)="cancelCustomSearch()" mode="ios">
+    </ion-searchbar>
+    <div class="filter">
+      <ion-item *ngIf="!this.storesFiltered" (click)="this.displayFilter()">
+        <ion-icon name="filter"></ion-icon>
+        <ion-text>Filtro</ion-text>
+      </ion-item>
+      <ion-item *ngIf="this.storesFiltered" (click)="this.cleanFilter()">
+        <ion-icon name="arrow-undo-outline"></ion-icon>
+        <ion-text>Limpiar filtro</ion-text>
+      </ion-item>
+    </div>
+
     <div class="products">
       <div id="container">
         <div *ngFor="let store of stores" class="product-card">
