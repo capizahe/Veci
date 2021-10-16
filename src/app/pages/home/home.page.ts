@@ -6,32 +6,37 @@ import { FilterObject } from 'src/app/model/filter-object';
 import { StoreCategory } from 'src/app/model/store-category';
 import { LoginService } from 'src/app/services/login.service';
 import { StoreServiceService } from 'src/app/services/store-service.service';
-import { UserService } from 'src/app/services/user-service.service';
 import { Store } from '../../model/store';
 import { FilterPage } from '../filter/filter.page';
 
 @Component({
-  selector: 'app-tab1',
+  selector: 'app-hme',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
 
-  stores: Array<Store>;
-  storesFiltered: Array<Store>;
-  storesUnfiltered: Array<Store>;
+  public stores: Array<Store>;
+  public storesFiltered: Array<Store>;
 
-  category: StoreCategory;
-  name: string;
+  public category: StoreCategory;
+  public name: string;
 
-  slideOpts = {
-    initialSlide: 1,
-    speed: 600,
-    autoplay: true
-  };
+  public slideOpts: any;
+
+  private storesUnfiltered: Array<Store>;
+
 
   constructor(private router: Router, private storeService: StoreServiceService, private alertController: AlertController,
-    private loginService: LoginService, private modalController: ModalController) { }
+    private loginService: LoginService, private modalController: ModalController) {
+
+    this.slideOpts = {
+      initialSlide: 1,
+      speed: 600,
+      autoplay: true
+    };
+
+  }
 
   async ngOnInit() {
     this.loadStores();
@@ -40,6 +45,9 @@ export class HomePage implements OnInit {
     });
   }
 
+  /**
+   * Carga de tiendas disponibles
+   */
   loadStores() {
     this.storeService.getAvailableStores()
       .subscribe({
@@ -47,14 +55,9 @@ export class HomePage implements OnInit {
           console.log(data);
           this.stores = data;
           this.storesUnfiltered = this.stores;
-
-        },
-        complete: () => {
-          console.log('Data retrieve success');
         },
         error: (error) => {
           this.showErrorAlert(error);
-          console.log(error);
         }
       });
   }
@@ -68,9 +71,37 @@ export class HomePage implements OnInit {
     alertMessage.present();
   }
 
-
+  /**
+   * Disparador de filtro de tiendas.
+   */
   async displayFilter() {
 
+    const categoryFilter = this.categoryFilterLoad();
+
+    const modal = await this.modalController.create({
+      component: FilterPage,
+      componentProps: {
+        filterObjects: categoryFilter
+      },
+      cssClass: 'filterModal'
+    });
+
+    await modal.present();
+
+    modal.onWillDismiss().then(data => {
+      if (data.data) {
+        console.log(data.data.filteredObjectResponse);
+        this.filterData(data.data.filteredObjectResponse as FilterObject[]);
+      }
+    });
+  }
+
+  /**
+   * Carga de filtros predefinidos con valores dinamicos
+   *
+   * @returns FilterObject
+   */
+  async categoryFilterLoad(): Promise<FilterObject[]> {
     const categories = [];
     await this.stores.forEach(store => {
       if (categories.indexOf(store.Category.name) === -1) {
@@ -108,32 +139,16 @@ export class HomePage implements OnInit {
 
     filterObjects.push(filterObjectDistance, filterObjectCategory, filterObjectMinimumOrder);
 
-    console.log(categories);
-
-    const modal = await this.modalController.create({
-      component: FilterPage,
-      componentProps: {
-        filterObjects
-      },
-      cssClass: 'filterModal'
-    });
-
-    await modal.present();
-
-    modal.onWillDismiss().then(data => {
-      if (data.data) {
-        console.log(data.data.filteredObjectResponse);
-        this.filterData(data.data.filteredObjectResponse as FilterObject[]);
-      }
-    });
-
-
+    return filterObjects;
   }
 
 
+  /**
+   * Motor de filtro.
+   *
+   * @param data
+   */
   filterData(data: FilterObject[]) {
-
-    console.log(data);
 
     this.storesUnfiltered = this.stores;
 
@@ -156,6 +171,10 @@ export class HomePage implements OnInit {
               this.storesFiltered = this.storesFiltered.concat(this.stores.filter((store) => store.delivery_time === Number(data[i].options[j].split(' ')[0])));
               console.log('Status', this.storesFiltered);
               break;
+            case 'pedido minimo':
+              this.storesFiltered = this.storesFiltered.concat(this.stores.filter((store) => store.minimum_order ===
+                Number(data[i].options[j])));
+              break;
           }
         }
       }
@@ -168,12 +187,19 @@ export class HomePage implements OnInit {
     }
   }
 
-
+  /**
+   * Limpia el filtro
+   */
   cleanFilter() {
     this.stores = this.storesUnfiltered;
     this.storesFiltered = null;
   }
 
+  /**
+   * Busca tienda por nombre basado en coincidencias.
+   *
+   * @param $event input que contiene el valor diligenciado de la barra de busqueda
+   */
   searchStore($event: any) {
     const input = String($event.target.value).toLocaleLowerCase();
     this.storesFiltered = [];
@@ -181,7 +207,8 @@ export class HomePage implements OnInit {
     this.stores = this.storesFiltered;
   }
 
-  cancelCustomSearch() {
+
+  cancelCustomSearch(): void {
     this.stores = this.storesUnfiltered;
     this.storesFiltered = null;
   }
