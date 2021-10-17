@@ -12,6 +12,21 @@
 
 <ion-content>
 
+  <ion-card class="store-details-card" *ngIf="this.store">
+    <ion-card-content class="store-details">
+      <ion-item lines="none">
+        <ion-icon name="bicycle"></ion-icon>
+        <ion-label>Domicilio</ion-label>
+        <ion-label>${{this.store?.delivery_fee}}</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-icon name="time-outline"></ion-icon>
+        <ion-label>Horario</ion-label>
+        <ion-label>{{this.store?.start_time}} - {{this.store?.end_time}}</ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
   <ion-searchbar showCancelButton="focus"></ion-searchbar>
 
   <ion-icon class="filter" name="filter"></ion-icon>
