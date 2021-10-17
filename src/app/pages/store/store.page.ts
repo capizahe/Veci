@@ -50,12 +50,15 @@ export class StorePage implements OnInit {
       });
   }
 
-  loadStoreInfo() {
-    this.storeService.getStoreById(this.storeIdParam)
+  async loadStoreInfo() {
+    await this.storeService.getStoreById(this.storeIdParam)
       .subscribe({
         next: (data) => {
           console.log(data);
           this.store = data[0];
+          this.store.start_time = this.store.start_time.substring(0, this.store.start_time.length - 3);
+          this.store.end_time = this.store.end_time.substring(0, this.store.end_time.length - 3);
+
           this.defaultName = this.store.name;
           console.log(this.store);
 
@@ -69,6 +72,7 @@ export class StorePage implements OnInit {
         }
       });
   }
+
 
   async showErrorAlert(error) {
     const alertMessage = await this.alertController.create({
