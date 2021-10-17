@@ -43,10 +43,11 @@ ion-content {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 1%;
+    margin: 3%;
     padding: 2%;
     ion-button {
-        margin: 5%;
+        width: 90%;
+        font-size: x-small;
     }
 }
 

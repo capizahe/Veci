@@ -3,8 +3,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { environment } from 'src/environments/environment';
-
 
 @Injectable({
   providedIn: 'root'

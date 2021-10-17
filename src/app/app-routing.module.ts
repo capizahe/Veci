@@ -21,6 +21,10 @@ const routes: Routes = [
     path: 'product-additional-info/:id',
     loadChildren: () => import('./pages/product-additional-info/product-additional-info.module')
       .then(m => m.ProductAdditionalInfoPageModule)
+  },
+  {
+    path: 'filter',
+    loadChildren: () => import('./pages/filter/filter.module').then( m => m.FilterPageModule)
   }
 ];
 @NgModule({

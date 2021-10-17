@@ -1,0 +1,50 @@
+.values-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+
+.options {
+    flex-basis: 50%;
+    flex-basis: 50%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 3%;
+}
+
+.filter-header {
+    height: 10% !important;
+    text-align: center;
+}
+
+.category-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2%;
+    background-color: var(--ion-color-primary);
+    color: white;
+    margin-right: 4%;
+    border-radius: 5%;
+}
+
+.filter-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.filter-wrapper {
+    overflow-y: scroll;
+    height: 80%;
+}

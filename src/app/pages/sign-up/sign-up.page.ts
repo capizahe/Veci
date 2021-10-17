@@ -177,7 +177,6 @@ export class SignUpPage implements OnInit {
     newUser.city = this.city;
     newUser.country = this.country;
     newUser.departament = this.state;
-    console.log(newUser);
     this.userService.createUser(newUser).subscribe({
       next: (data) => {
         if (data && data.token) {
