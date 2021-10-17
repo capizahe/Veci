@@ -19,7 +19,7 @@ export class FilterPage implements OnInit {
   dataLoaded = false;
 
   constructor(@Inject(DOCUMENT) document, public modalController: ModalController) {
-
+    console.log(this.filterObjects);
   }
 
   /**

@@ -76,7 +76,7 @@ export class HomePage implements OnInit {
    */
   async displayFilter() {
 
-    const categoryFilter = this.categoryFilterLoad();
+    const categoryFilter = await this.categoryFilterLoad();
 
     const modal = await this.modalController.create({
       component: FilterPage,

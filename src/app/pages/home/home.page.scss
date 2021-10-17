@@ -27,6 +27,8 @@ ion-slide {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    height: 26px;
+    overflow: hidden;
 
     ion-item {
         font-size: x-small;
