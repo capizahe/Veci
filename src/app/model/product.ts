@@ -1,8 +1,9 @@
+import { ProductCategory } from "./product-category";
+
 export class Product {
 
     id: number;
     storeId: number;
-    category: string;
     price: number;
     discountPrice: number;
     availability: boolean;
@@ -10,6 +11,7 @@ export class Product {
     name: string;
     createdAt: Date;
     modifiedAt: Date;
+    ProductCategory: ProductCategory;
 
     // eslint-disable-next-line @typescript-eslint/naming-convention
     Options: any;

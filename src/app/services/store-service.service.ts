@@ -49,6 +49,4 @@ export class StoreServiceService {
   public set storeList(stores: Array<Store>) {
     this.stores = stores;
   }
-
-
 }

@@ -1,6 +1,6 @@
 <ion-card class="card no-scroll" (click)="addProductToCart()">
   <div class=" category">
-    <span>{{this.product.category}}</span>
+    <span>{{this.product.ProductCategory.name}}</span>
   </div>
   <div class="like" #like (click)="likeProduct(); $event.stopPropagation()">
     <ion-icon name="heart"></ion-icon>

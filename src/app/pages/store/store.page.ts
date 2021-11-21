@@ -30,7 +30,6 @@ export class StorePage implements OnInit {
   ngOnInit() {
     this.loadStoreInfo();
     this.loadProducts();
-
   }
 
   loadProducts() {

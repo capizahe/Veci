@@ -8,10 +8,10 @@ export const environment = {
 
   webClientId: '221788106045-trn14ssklpbg0hsnov8mu2hfnduurqel.apps.googleusercontent.com',
 
-  userServiceURL: 'http://192.168.1.108:3000/user',
-  productServiceURL: 'http://192.168.1.108:5556/product',
-  storeServiceURL: 'http://192.168.1.108:1234/store',
-  storeCategoryServiceURL: 'http://192.168.8.106:1234/category',
+  userServiceURL: 'http://localhost:3000/user',
+  productServiceURL: 'http://localhost:5556/product',
+  storeServiceURL: 'http://localhost:1234/store',
+  storeCategoryServiceURL: 'http://localhost:1234/category',
   productOptionsURL: 'http://localhost:5556/product_options',
 
   firebaseConfig: {
