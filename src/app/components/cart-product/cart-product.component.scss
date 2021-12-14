@@ -21,8 +21,8 @@
         margin: 0%;
         overflow: hidden;
         img {
-            width: 75px;
-            height: 75px;
+            width: 80%;
+            height: 80%;
         }
     }
 }
@@ -40,12 +40,6 @@
     color: whitesmoke;
     font-weight: bold;
     border-radius: 5%;
-}
-
-.like {
-    position: absolute;
-    top: 2%;
-    right: 3%;
 }
 
 .pricing {
@@ -66,10 +60,8 @@
     }
 }
 
-.option {
+.like {
     position: absolute;
-    left: 85% !important;
-    top: 75% !important;
-    font-size: x-large;
+    top: 2%;
+    right: 5%;
 }
-

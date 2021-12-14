@@ -7,7 +7,7 @@ import { StoreCategory } from 'src/app/model/store-category';
 import { LoginService } from 'src/app/services/login.service';
 import { StoreServiceService } from 'src/app/services/store-service.service';
 import { Store } from '../../model/store';
-import { FilterPage } from '../filter/filter.page';
+import { FilterPage } from '../modals/filter/filter.page';
 
 @Component({
   selector: 'app-hme',

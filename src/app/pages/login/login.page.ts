@@ -2,13 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
-import { Observable } from 'rxjs';
+
 import { AlertController, Platform } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user-service.service';
-import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-login',
@@ -22,16 +19,13 @@ export class LoginPage implements OnInit {
   private email;
   private id;
 
-
   constructor(public alertController: AlertController, private router: Router,
     private platform: Platform, private loginService: LoginService, private userService: UserService) {
-
   }
 
   ngOnInit() {
 
     //Validate if user it is logged already in the system
-
     this.loginService.getUser().subscribe(user => {
 
       if (user) {
@@ -67,7 +61,6 @@ export class LoginPage implements OnInit {
         .then(user => {
           if (user) {
             console.log(user);
-
           }
         })
         .catch(error => {

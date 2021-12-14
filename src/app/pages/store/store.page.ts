@@ -1,7 +1,7 @@
 import { identifierModuleUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Product } from 'src/app/model/product';
 import { Store } from 'src/app/model/store';
 import { ProductService } from 'src/app/services/product.service';
@@ -43,7 +43,7 @@ export class StorePage implements OnInit {
           console.log('Data retrieve success');
         },
         error: (error) => {
-          this.showErrorAlert(error);
+          this.showErrorAlert("Ha ocurrido un error cargando la información de la tienda");
           console.log(error);
         }
       });
@@ -66,12 +66,11 @@ export class StorePage implements OnInit {
           console.log('Data retrieve success');
         },
         error: (error) => {
-          this.showErrorAlert(error);
+          this.showErrorAlert("Ha ocurrido un error cargando la información de la tienda");
           console.log(error);
         }
       });
   }
-
 
   async showErrorAlert(error) {
     const alertMessage = await this.alertController.create({

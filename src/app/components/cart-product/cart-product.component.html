@@ -1,0 +1,27 @@
+<ion-card class="card no-scroll" (click)="null">
+  <div class=" category">
+    <span>{{this.cartProduct.product.ProductCategory.name}}</span>
+  </div>
+  <div class="like" #like (click)="$event.stopPropagation()">
+    <ion-icon name="bag-remove-outline" style="width: 25px; height: 25px;"></ion-icon>
+  </div>
+  <div class="content">
+    <div class="product-image">
+      <img [src]="this.cartProduct.product.imageUrl">
+    </div>
+    <div class="product-info">
+      <span>{{this.cartProduct.product.name}}</span>
+    </div>
+  </div>
+  <div class="pricing">
+    <div class="pricing-regular" #regularPrice>
+      <span>{{this.cartProduct.product.price | currency:'USD': true:'2.0'}}</span>
+    </div>
+    <div *ngIf="this.cartProduct.product.discountPrice !== 0" class="pricing-promo">
+      <span>{{this.cartProduct.product.discountPrice | currency:'USD': true:'2.0'}}</span>
+    </div>
+  </div>
+
+
+
+</ion-card>

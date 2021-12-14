@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi carrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="cart-products">
+      <ion-list style="width: 100%;">
+        <ion-item *ngFor="let cartProduct of products">
+          <app-cart-product [cartProduct]="cartProduct" style="width: 100%;"></app-cart-product>
+        </ion-item>
+      </ion-list>
+  </div>
+  <div class="cart-total">
+    <p>
+      Total: <span>${{1.0}}</span>
+    </p>
+  </div>
+  <ion-button color="success" expand="full" shape="round" style="margin: 2%; margin-right: 4%;">Hacer pedido</ion-button>
+</ion-content>

@@ -2,11 +2,13 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Option } from 'src/app/model/option';
 import { Product } from 'src/app/model/product';
+import { CartService } from 'src/app/services/cart-service.service';
 import { ProductOptionService } from 'src/app/services/product-option.service';
 import { ProductService } from 'src/app/services/product.service';
+import { AddProductPage } from '../modals/add-product/add-product.page';
 
 @Component({
   selector: 'app-product-additional-info',
@@ -33,7 +35,7 @@ export class ProductAdditionalInfoPage implements OnInit {
     private productOptionService: ProductOptionService,
     private productService: ProductService,
     @Inject(DOCUMENT) document, private alertController: AlertController,
-    public toastController: ToastController, private router: Router) {
+    public toastController: ToastController, private router: Router, private modalController: ModalController, private cartService:CartService) {
 
     this.productId = this.activatedRouter.snapshot.paramMap.get('id');
 
@@ -59,13 +61,10 @@ export class ProductAdditionalInfoPage implements OnInit {
       .subscribe({
         next: (data) => {
           this.options = data;
-          console.log(this.options);
 
           for (let i = 0; i < this.options.length; i++) {
             this.optionResponses[i] = '';
           }
-
-
         },
         complete: () => {
 
@@ -157,10 +156,15 @@ export class ProductAdditionalInfoPage implements OnInit {
         position: 'middle'
       });
 
-      toast.present()
-        .finally(() => {
+      
+      this.showAddProductModal()
+      .then(data =>{
+        console.log("Se agrego el producto al carrito");
+      })
+      .finally(() =>{
+          toast.present()
           this.router.navigateByUrl(`/store/${this.product.storeId}`);
-        });
+      })
 
     } else {
       this.showErrorAlert();
@@ -176,6 +180,25 @@ export class ProductAdditionalInfoPage implements OnInit {
       mode: 'ios'
     });
     alertMessage.present();
+  }
+
+
+  async showAddProductModal(){
+
+    const modal = await this.modalController.create({
+      component: AddProductPage,
+      mode: 'ios',
+      swipeToClose: true,
+      showBackdrop: true,
+      cssClass: 'action-modal',
+      backdropDismiss: true,    
+      componentProps: {
+        product: this.product
+      }
+    })
+
+    return modal.present();
+
   }
 
 

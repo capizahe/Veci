@@ -24,7 +24,15 @@ const routes: Routes = [
   },
   {
     path: 'filter',
-    loadChildren: () => import('./pages/filter/filter.module').then( m => m.FilterPageModule)
+    loadChildren: () => import('./pages/modals/filter/filter.module').then( m => m.FilterPageModule)
+  },
+  {
+    path: 'add-product',
+    loadChildren: () => import('./pages/modals/add-product/add-product.module').then( m => m.AddProductPageModule)
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule)
   }
 ];
 @NgModule({

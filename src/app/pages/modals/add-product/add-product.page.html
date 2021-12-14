@@ -1,0 +1,29 @@
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-label style="display: flex; justify-content: center; padding-bottom: 5%;">
+        Confimación
+        <ion-icon name="checkbox" color="success"></ion-icon>
+      </ion-label>
+
+      <div class="counter">
+        <div class="plus" (click)="this.increaseCounter()">
+          <ion-icon name="add-circle" color="success"></ion-icon>
+        </div>
+        <div class="value">
+          {{productCount}}
+        </div>
+        <div class="minus" (click)="this.decreaseCounter()">
+          <ion-icon name="remove-circle" color="danger"></ion-icon>
+        </div>
+      </div>
+      <ion-button expand="full" shape="round" (click)="addProductToCart()">
+        Agregar
+      </ion-button>
+      <ion-button expand="full" shape="round" color="danger" (click)="dismissProductAdition()">
+        Salir
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

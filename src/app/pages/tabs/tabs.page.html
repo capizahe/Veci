@@ -5,7 +5,8 @@
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tab2">
+    <ion-tab-button tab="cart">
+      <ion-badge color="primary" *ngIf="this.cartService.getCartCount() > 0" color="danger">{{this.cartService.getCartCount()}}</ion-badge>
       <ion-icon name="cart-outline"></ion-icon>
       <ion-label>Carrito</ion-label>
     </ion-tab-button>

@@ -1,6 +1,8 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Product } from 'src/app/model/product';
+import { AddProductPage } from 'src/app/pages/modals/add-product/add-product.page';
 
 @Component({
   selector: 'app-product-card',
@@ -17,10 +19,8 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
 
   private productLiked = false;
 
-  constructor(private router: Router) {
-
+  constructor(private router: Router, private modalController: ModalController) {
     //Validate if product was liked before by the user
-
   }
 
   ngAfterViewInit(): void {
@@ -49,12 +49,27 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
   addProductToCart() {
 
     if (this.product.Options && this.product.Options.length > 0) {
-
       this.router.navigateByUrl(`/product-additional-info/${this.product.id}`);
-
     } else {
       //Add product to cart
     }
+  }
+  
+  async showAddProductModal(){
+
+    const modal = await this.modalController.create({
+      component: AddProductPage,
+      mode: 'ios',
+      swipeToClose: true,
+      showBackdrop: true,
+      cssClass: 'action-modal',
+      backdropDismiss: true,    
+      componentProps: {
+       product: this.product
+      }
+    })
+
+    return modal.present();
 
   }
 

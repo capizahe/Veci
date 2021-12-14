@@ -15,7 +15,11 @@ const routes: Routes = [
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
-      }
+      },
+      {
+        path: 'cart',
+        loadChildren: () => import('../cart/cart-routing.module').then(m => m.CartPageRoutingModule)
+      } 
     ]
   },
   {
